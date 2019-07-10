@@ -1,29 +1,43 @@
-.title single light circuit
+.title Single light circuit
 
-* Imports
+***************
+* Components
+***************
+
 .include circuit_simulation/2N2222A.TXT
-* .include 2N2907A.TXT
+* .include circuit_simulation/2N2907A.TXT
 
+***************
 * Circuit
-vcc pwr 0 dc 12V
-vx x 0 dc 0 PULSE (0 5 1u 1u 1u 1s)
-vy y 0 dc 0 PULSE (0 5 1u 1u 1u 1s)
-q1 y x b Q2N2222
-c1 b 0 1u
-r1 b 0 1k
-q2 c b e Q2N2222
-r2 e 0 1
-rl pwr e 10
+***************
 
-* Plot
-.tran 0.1ms 2s
+* Power and inputs
+vcc pwr 0 dc 12V
+vy y 0 dc 5V
+* (initial V, pulsed V, delay time, rise time, fall time, pulse width, period)
+vx x 0 dc 0 PULSE (0 5 100ns 100ns 100ns 0.002ms 17ms)
+
+* Switching transistor and time decay
+* (collector, base, emitter )
+q1 y x a Q2N2222
+c1 a 0 0.4u
+r1 a 0 500k
+
+* Power transistor and light
+r2 a b 10k
+q2 c b 0 Q2N2222
+* light
+rl pwr c 10
+
+***************
+* Graph
+***************
+
+
+.tran 100ns 18ms
 .control
 run
-plot v(x) v(y) v(b) v(e)
-
-* Save image
-* set hcopydevtype=postscript
-* hardcopy rcPlot.ps v(b) v(e)
+plot v(x) v(b) v(a) v(c)
 
 .endc
 
