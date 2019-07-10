@@ -1,7 +1,7 @@
 .title single light circuit
 
 * Imports
-.include 2N2222A.TXT
+.include circuit_simulation/2N2222A.TXT
 * .include 2N2907A.TXT
 
 * Circuit
